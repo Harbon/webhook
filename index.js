@@ -1,6 +1,6 @@
 var http = require('http')
 var createHandler = require('github-webhook-handler')
-var handler = createHandler({ path: '/incoming', secret: 'myHashSecret' })
+var handler = createHandler({ path: '/webhook', secret: 'youcantknowthis!' })
 // 上面的 secret 保持和 GitHub 后台设置的一致
 
 function run_cmd(cmd, args, callback) {
@@ -17,7 +17,7 @@ http.createServer(function (req, res) {
     res.statusCode = 404
     res.end('no such location')
   })
-}).listen(7777)
+}).listen(4000)
 
 handler.on('error', function (err) {
   console.error('Error:', err.message)
@@ -27,7 +27,7 @@ handler.on('push', function (event) {
   console.log('Received a push event for %s to %s',
     event.payload.repository.name,
     event.payload.ref);
-  run_cmd('sh', ['./deploy-dev.sh'], function(text){ console.log(text) });
+  run_cmd('sh', ['gitReceivePush'], function(text){ console.log(text) });
 })
 
 /*
