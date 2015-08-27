@@ -1,0 +1,17 @@
+{
+  "name": "bloghook",
+  "version": "1.0.0",
+  "description": "github hook",
+  "main": "index.js",
+  "scripts": {
+    "test": "node index.js"
+  },
+  "keywords": [
+    "nohackok"
+  ],
+  "author": "Harbon",
+  "license": "ISC",
+  "dependencies":{
+    "github-webhook-handler" :"*"
+  }
+}
