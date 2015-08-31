@@ -1,6 +1,7 @@
 var http = require('http')
 var createHandler = require('github-webhook-handler')
 var handler = createHandler({ path: '/webhook', secret: 'youcantknowthis!' })
+
 // 上面的 secret 保持和 GitHub 后台设置的一致
 
 function run_cmd(cmd, args, callback) {
@@ -27,7 +28,17 @@ handler.on('push', function (event) {
   console.log('Received a push event for %s to %s',
     event.payload.repository.name,
     event.payload.ref);
-  run_cmd('sh', ['gitReceivePush'], function(text){ console.log(text) });
+    var repositoryName = event.payload.repository.name;
+    switch (repositoryName) {
+      case "Blog":
+        run_cmd('sh', ['/home/Harbon/webhook/BlogAutoDeployment.sh'], function(text){ console.log(text) });
+        break;
+      case "CloudTask":
+        run_cmd('sh', ['/home/Harbon/webhook/CloudTaskAutoDeployment.sh'], function(text){ console.log(text) });
+      default:
+
+    }
+
 })
 
 /*

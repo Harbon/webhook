@@ -21,7 +21,7 @@ if [$? -eq 1];then
     if [ -e ./target/debug/blog ];then
       blog_pid=`lsof -i:3000|tail -n 1|cut -d ' ' -f 5`
       kill $blog_pid
-      if [ $? -eq 1];then
+      if [ $? -eq 1 ];then
         echo 'kill blog_pid error' | mail -s 'server robot report' qq@harbon.link
       fi
       cd target/debug/
